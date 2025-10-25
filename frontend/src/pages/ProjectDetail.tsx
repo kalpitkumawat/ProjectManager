@@ -41,10 +41,16 @@ const ProjectDetailPage = () => {
     }
 
     try {
-      await tasksApi.create(Number(id), {
+      const taskData: any = {
         title: newTask.title,
-        dueDate: newTask.dueDate ? newTask.dueDate : null,
-      });
+      };
+      
+      // Only add dueDate if it has a value
+      if (newTask.dueDate) {
+        taskData.dueDate = newTask.dueDate;
+      }
+      
+      await tasksApi.create(Number(id), taskData);
       setNewTask({ title: '', dueDate: '' });
       setShowTaskModal(false);
       loadProject();
@@ -58,11 +64,17 @@ const ProjectDetailPage = () => {
     if (!editingTask) return;
 
     try {
-      await tasksApi.update(editingTask.id, {
+      const taskData: any = {
         title: editingTask.title,
-        dueDate: editingTask.dueDate ? editingTask.dueDate : null,
         isCompleted: editingTask.isCompleted,
-      });
+      };
+      
+      // Only add dueDate if it has a value
+      if (editingTask.dueDate) {
+        taskData.dueDate = editingTask.dueDate;
+      }
+      
+      await tasksApi.update(editingTask.id, taskData);
       setEditingTask(null);
       loadProject();
     } catch (err: any) {
