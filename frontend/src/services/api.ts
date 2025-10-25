@@ -12,7 +12,7 @@ import type {
   UpdateTaskRequest,
 } from '../types';
 
-const API_URL = 'http://localhost:5070/api';
+const API_URL = 'https://projectmanager-production-4893.up.railway.app/api';
 
 const api = axios.create({
   baseURL: API_URL,
