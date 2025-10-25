@@ -31,6 +31,17 @@ const ProjectDetailPage = () => {
     }
   };
 
+  const closeTaskModal = () => {
+    setShowTaskModal(false);
+    setError('');
+    setNewTask({ title: '', dueDate: '' });
+  };
+
+  const closeEditModal = () => {
+    setEditingTask(null);
+    setError('');
+  };
+
   const handleCreateTask = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -42,20 +53,20 @@ const ProjectDetailPage = () => {
 
     try {
       const taskData: any = {
-        title: newTask.title,
+        title: newTask.title.trim(),
       };
       
       // Only add dueDate if it has a value
-      if (newTask.dueDate) {
+      if (newTask.dueDate && newTask.dueDate.trim()) {
         taskData.dueDate = newTask.dueDate;
       }
       
       await tasksApi.create(Number(id), taskData);
-      setNewTask({ title: '', dueDate: '' });
-      setShowTaskModal(false);
+      closeTaskModal();
       loadProject();
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create task');
+      console.error('Create task error:', err);
+      setError(err.response?.data?.message || err.message || 'Failed to create task');
     }
   };
 
@@ -65,20 +76,21 @@ const ProjectDetailPage = () => {
 
     try {
       const taskData: any = {
-        title: editingTask.title,
+        title: editingTask.title.trim(),
         isCompleted: editingTask.isCompleted,
       };
       
       // Only add dueDate if it has a value
-      if (editingTask.dueDate) {
+      if (editingTask.dueDate && editingTask.dueDate.trim && editingTask.dueDate.trim()) {
         taskData.dueDate = editingTask.dueDate;
       }
       
       await tasksApi.update(editingTask.id, taskData);
-      setEditingTask(null);
+      closeEditModal();
       loadProject();
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to update task');
+      console.error('Update task error:', err);
+      setError(err.response?.data?.message || err.message || 'Failed to update task');
     }
   };
 
@@ -181,7 +193,7 @@ const ProjectDetailPage = () => {
 
       {/* Create Task Modal */}
       {showTaskModal && (
-        <div className="modal-overlay" onClick={() => setShowTaskModal(false)}>
+        <div className="modal-overlay" onClick={closeTaskModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Add New Task</h2>
             <form onSubmit={handleCreateTask}>
@@ -211,7 +223,7 @@ const ProjectDetailPage = () => {
               </div>
 
               <div className="modal-actions">
-                <button type="button" onClick={() => setShowTaskModal(false)} className="btn-secondary">
+                <button type="button" onClick={closeTaskModal} className="btn-secondary">
                   Cancel
                 </button>
                 <button type="submit" className="btn-primary">
@@ -225,7 +237,7 @@ const ProjectDetailPage = () => {
 
       {/* Edit Task Modal */}
       {editingTask && (
-        <div className="modal-overlay" onClick={() => setEditingTask(null)}>
+        <div className="modal-overlay" onClick={closeEditModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Edit Task</h2>
             <form onSubmit={handleUpdateTask}>
@@ -265,7 +277,7 @@ const ProjectDetailPage = () => {
               </div>
 
               <div className="modal-actions">
-                <button type="button" onClick={() => setEditingTask(null)} className="btn-secondary">
+                <button type="button" onClick={closeEditModal} className="btn-secondary">
                   Cancel
                 </button>
                 <button type="submit" className="btn-primary">
