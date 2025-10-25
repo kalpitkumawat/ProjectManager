@@ -11,7 +11,7 @@
 
 ---
 
-## **Assignment **
+## ** Assignment **
 
 - ✅ **Base Requirements**  - Full-stack app with auth, CRUD operations
 - ✅ **Bonus Feature**  - Smart Task Scheduler with dependency resolution
@@ -143,8 +143,6 @@ dotnet run
 
 ---
 
-## **What I Built**
-
 ### Core Application
 - Full-stack CRUD application
 - User authentication with JWT
@@ -162,9 +160,3 @@ dotnet run
 - Frontend on Vercel (auto-deploy from GitHub)
 - Backend on Railway with PostgreSQL
 - CI/CD pipeline configured
-
----
-
-## **Author**
-
-Created for full-stack development assignment.
