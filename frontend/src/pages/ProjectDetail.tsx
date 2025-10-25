@@ -43,7 +43,7 @@ const ProjectDetailPage = () => {
     try {
       await tasksApi.create(Number(id), {
         title: newTask.title,
-        dueDate: newTask.dueDate || undefined,
+        dueDate: newTask.dueDate ? newTask.dueDate : null,
       });
       setNewTask({ title: '', dueDate: '' });
       setShowTaskModal(false);
@@ -60,7 +60,7 @@ const ProjectDetailPage = () => {
     try {
       await tasksApi.update(editingTask.id, {
         title: editingTask.title,
-        dueDate: editingTask.dueDate || undefined,
+        dueDate: editingTask.dueDate ? editingTask.dueDate : null,
         isCompleted: editingTask.isCompleted,
       });
       setEditingTask(null);
