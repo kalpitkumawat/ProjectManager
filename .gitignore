@@ -1,0 +1,28 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Node modules
+node_modules/
+dist/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+appsettings.Development.json
