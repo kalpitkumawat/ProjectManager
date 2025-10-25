@@ -24,11 +24,19 @@ const Login = () => {
 
     try {
       await login({ email, password });
+      // Only navigate on successful login
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid email or password. Please try again.');
-    } finally {
+      // Stay on login page and show error
+      console.error('Login error:', err);
+      const errorMessage = err.response?.data?.message || 
+                          err.response?.data?.error ||
+                          err.message ||
+                          'Invalid email or password. Please try again.';
+      setError(errorMessage);
       setLoading(false);
+      // Explicitly prevent any navigation
+      return;
     }
   };
 
